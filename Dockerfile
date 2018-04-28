@@ -41,7 +41,7 @@ RUN echo "export REPO_URL='https://mirrors.tuna.tsinghua.edu.cn/git/git-repo/'" 
 
 # The persistent data will be in these two directories, everything else is
 # considered to be ephemeral
-VOLUME ["/tmp/ccache", "/aosp"]
+VOLUME ["/tmp/ccache", "/usr/local/aosp"]
 
 # Improve rebuild performance by enabling compiler cache
 ENV USE_CCACHE 1
@@ -49,4 +49,4 @@ ENV CCACHE_DIR /tmp/ccache
 
 # Work in the build directory, repo is expected to be init'd here
 USER aosp
-WORKDIR /aosp
+WORKDIR /usr/local/aosp
