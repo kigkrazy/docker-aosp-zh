@@ -26,7 +26,9 @@ RUN apt-get update && \
         pngcrush schedtool xsltproc zip zlib1g-dev && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-ADD https://commondatastorage.googleapis.com/git-repo-downloads/repo /usr/local/bin/
+#ADD https://commondatastorage.googleapis.com/git-repo-downloads/repo /usr/local/bin/
+#change `repo` download mirror to TUNA
+RUN curl https://mirrors.tuna.tsinghua.edu.cn/git/git-repo -o /usr/local/bin/repo
 RUN chmod 755 /usr/local/bin/*
 
 # All builds will be done by user aosp
@@ -34,6 +36,7 @@ RUN useradd --create-home aosp
 ADD gitconfig /home/aosp/.gitconfig
 ADD ssh_config /home/aosp/.ssh/config
 RUN chown aosp:aosp /home/aosp/.gitconfig
+RUN echo "export REPO_URL='https://mirrors.tuna.tsinghua.edu.cn/git/git-repo/'" >> /home/aosp/.bashrc
 
 # The persistent data will be in these two directories, everything else is
 # considered to be ephemeral
