@@ -3,7 +3,7 @@
 #
 FROM ubuntu:14.04
 
-MAINTAINER Kyle Manna <kyle@kylemanna.com>
+MAINTAINER kigkrazy <kigkrazy@gmail.com>
 
 # Setup for Java
 RUN echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main" \
@@ -36,6 +36,7 @@ RUN useradd --create-home aosp
 ADD gitconfig /home/aosp/.gitconfig
 ADD ssh_config /home/aosp/.ssh/config
 RUN chown aosp:aosp /home/aosp/.gitconfig
+# add REPO_URL env
 RUN echo "export REPO_URL='https://mirrors.tuna.tsinghua.edu.cn/git/git-repo/'" >> /home/aosp/.bashrc
 
 # The persistent data will be in these two directories, everything else is
