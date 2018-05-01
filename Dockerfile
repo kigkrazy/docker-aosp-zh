@@ -45,6 +45,7 @@ RUN echo 'export PATH=$PATH:$JAVA_HOME/bin' >> /etc/profile
 RUN echo 'export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar' >> /etc/profile
 RUN echo 'export JAVA_HOME JAVA_BIN PATH CLASSPATH' >> /etc/profile
 RUN rm -rf /usr/local/jdk-6u45-linux-x64.bin
+RUN echo "export REPO_URL='https://mirrors.tuna.tsinghua.edu.cn/git/git-repo/'" >> ~/.bashrc
 RUN echo '. /etc/profile' >> ~/.bashrc
 
 # All builds will be done by user aosp
