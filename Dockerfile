@@ -46,6 +46,8 @@ RUN echo 'export JAVA_HOME JAVA_BIN PATH CLASSPATH' >> /etc/profile
 RUN rm -rf /usr/local/jdk-6u45-linux-x64.bin
 RUN echo "export REPO_URL=$REPO_URL_ENV" >> ~/.bashrc
 RUN echo '. /etc/profile' >> ~/.bashrc
+RUN echo 'export AOSP_ROOT=/usr/local/aosp' >> /.bashrc
+RUN echo 'export PATH=$PATH:${AOSP_ROOT}/out/host/linux-x86/bin' >> /.bashrc
 WORKDIR /
 
 # All builds will be done by user aosp
