@@ -5,13 +5,13 @@ FROM ubuntu:14.04
 
 MAINTAINER kigkrazy <kigkrazy@gmail.com>
 
-# Setup for Java
-#RUN echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main" \
-#        >> /etc/apt/sources.list.d/webupd8.list && \
-#    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys EEA14886 && \
-#    echo oracle-java6-installer shared/accepted-oracle-license-v1-1 select true | debconf-set-selections
-
-
+# Some url config
+# TUNA is for china
+ENV REPO_DOWNLOAD_URL https://mirrors.tuna.tsinghua.edu.cn/git/git-repo
+# google is fo other contries
+#ENV REPO_DOWNLOAD_URL https://commondatastorage.googleapis.com/git-repo-downloads/repo
+ENV JDK_DOWNLOAD_URL http://bridsys.com/downloads/java/jdk-6u45-linux-x64.bin
+ENV REPO_URL_ENV 'https://mirrors.tuna.tsinghua.edu.cn/git/git-repo/'
 
 # /bin/sh points to Dash by default, reconfigure to use bash until Android
 # build becomes POSIX compliant
@@ -28,13 +28,12 @@ RUN apt-get update && \
         pngcrush schedtool xsltproc zip zlib1g-dev && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-#ADD https://commondatastorage.googleapis.com/git-repo-downloads/repo /usr/local/bin/
-#change `repo` download mirror to TUNA
-RUN curl https://mirrors.tuna.tsinghua.edu.cn/git/git-repo -o /usr/local/bin/repo
+# add repo tool
+RUN curl $REPO_DOWNLOAD_URL -o /usr/local/bin/repo
 RUN chmod 755 /usr/local/bin/*
 
 # install java6 by ftp
-RUN curl http://bridsys.com/downloads/java/jdk-6u45-linux-x64.bin -o /usr/local/jdk-6u45-linux-x64.bin
+RUN curl $JDK_DOWNLOAD_URL -o /usr/local/jdk-6u45-linux-x64.bin
 WORKDIR /usr/local
 RUN chmod 755 /usr/local/jdk-6u45-linux-x64.bin
 RUN /usr/local/jdk-6u45-linux-x64.bin
@@ -45,16 +44,14 @@ RUN echo 'export PATH=$PATH:$JAVA_HOME/bin' >> /etc/profile
 RUN echo 'export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar' >> /etc/profile
 RUN echo 'export JAVA_HOME JAVA_BIN PATH CLASSPATH' >> /etc/profile
 RUN rm -rf /usr/local/jdk-6u45-linux-x64.bin
-RUN echo "export REPO_URL='https://mirrors.tuna.tsinghua.edu.cn/git/git-repo/'" >> ~/.bashrc
+RUN echo "export REPO_URL=$REPO_URL_ENV" >> ~/.bashrc
 RUN echo '. /etc/profile' >> ~/.bashrc
+WORKDIR /
 
 # All builds will be done by user aosp
-RUN useradd --create-home aosp
-ADD gitconfig /home/aosp/.gitconfig
-ADD ssh_config /home/aosp/.ssh/config
-RUN chown aosp:aosp /home/aosp/.gitconfig
-# add REPO_URL env
-RUN echo "export REPO_URL='https://mirrors.tuna.tsinghua.edu.cn/git/git-repo/'" >> /home/aosp/.bashrc
+#RUN useradd --create-home aosp
+ADD gitconfig /root/.gitconfig
+ADD ssh_config /root/.ssh/config
 
 # The persistent data will be in these two directories, everything else is
 # considered to be ephemeral
