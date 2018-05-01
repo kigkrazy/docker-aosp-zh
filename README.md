@@ -26,29 +26,27 @@ virtual machine to enable development.
 
 Quickstart
 ----------
-
-For the terribly impatient.
-
-1. Make a directory to work and go there.
-2. Export the current directory as the persistent file store for the `aosp`
-   wrapper.
-3. Run a self contained build script, which does:
-    1. Attempts to fetch the `aosp` wrapper if not found locally.
-    2. Runs the `aosp` wrapper with an extra argument for the docker binary and
-       hints to the same script that when run later it's running in the docker
-       container.
-    3. The aosp wrapper then does it's magic which consists of fetching the
-       docker image if not found and forms all the necessary docker run
-       arguments seamlessly.
-    4. The docker container runs the other half the build script which
-       initializes the repo, fetches all source code, and builds.
-    5. In parallel you are expected to be drinking because I save you some time.
-
-
-    mkdir kitkat ; cd kitkat
-    export AOSP_VOL=$PWD
-    curl -O https://raw.githubusercontent.com/kylemanna/docker-aosp/master/tests/build-kitkat.sh
-    bash ./build-kitkat.sh
+1. Create docker image.
+```
+# in project dir
+docker build -t aosp:4.x -f Dockerfile-4.x .
+```
+2. Create aosp source directory, and ccache directory.
+```
+mkdir -p /usr/local/aosp
+mkdir -p /tmp/ccache
+```
+3. Create and run contain.
+```
+docker run -it --name aosp-4.x -v /usr/local/aosp:/usr/local/aosp -v /tmp/ccache:/tmp/ccache aosp:4.x
+```
+4. download aosp source.
+```
+# now you go into contain shell
+cd /usr/local/aosp
+repo init -u https://aosp.tuna.tsinghua.edu.cn/platform/manifest -b android-4.4.4_r1
+repo sync
+```
 
 How it Works
 ------------
