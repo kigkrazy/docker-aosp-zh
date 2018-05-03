@@ -59,6 +59,5 @@ ADD ssh_config /root/.ssh/config
 # considered to be ephemeral
 VOLUME ["/tmp/ccache", "/usr/local/aosp"]
 
-# Improve rebuild performance by enabling compiler cache
-ENV USE_CCACHE 1
-ENV CCACHE_DIR /tmp/ccache
+# Work in the build directory, repo is expected to be init'd here
+WORKDIR /usr/local/aosp

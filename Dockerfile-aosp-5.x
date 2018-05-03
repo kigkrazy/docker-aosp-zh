@@ -3,7 +3,7 @@
 #
 FROM ubuntu:14.04
 
-MAINTAINER Kyle kigkrazy <kigkrazy@gmail.com>
+MAINTAINER kigkrazy <kigkrazy@gmail.com>
 
 # Some url config
 # TUNA is for china
@@ -47,6 +47,5 @@ ADD ssh_config /root/.ssh/config
 # considered to be ephemeral
 VOLUME ["/tmp/ccache", "/usr/local/aosp"]
 
-# Improve rebuild performance by enabling compiler cache
-ENV USE_CCACHE 1
-ENV CCACHE_DIR /tmp/ccache
+# Work in the build directory, repo is expected to be init'd here
+WORKDIR /usr/local/aosp
