@@ -44,10 +44,10 @@ RUN echo 'export PATH=$PATH:$JAVA_HOME/bin' >> /etc/profile
 RUN echo 'export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar' >> /etc/profile
 RUN echo 'export JAVA_HOME JAVA_BIN PATH CLASSPATH' >> /etc/profile
 RUN rm -rf /usr/local/jdk-6u45-linux-x64.bin
-RUN echo "export REPO_URL=$REPO_URL_ENV" >> ~/.bashrc
-RUN echo '. /etc/profile' >> ~/.bashrc
-RUN echo 'export AOSP_ROOT=/usr/local/aosp' >> /.bashrc
-RUN echo 'export PATH=$PATH:${AOSP_ROOT}/out/host/linux-x86/bin' >> /.bashrc
+RUN echo "export REPO_URL=$REPO_URL_ENV" >> /root/.bashrc
+RUN echo '. /etc/profile' >> /root/.bashrc
+RUN echo 'export AOSP_ROOT=/usr/local/aosp' >> /root/.bashrc
+RUN echo 'export PATH=$PATH:${AOSP_ROOT}/out/host/linux-x86/bin' >> /root/.bashrc
 WORKDIR /
 
 

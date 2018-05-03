@@ -1,7 +1,7 @@
 #
 # Minimum Docker image to build Android AOSP
 #
-FROM ubuntu:14.04
+FROM ubuntu:16.04
 
 MAINTAINER kigkrazy <kigkrazy@gmail.com>
 
@@ -23,10 +23,10 @@ RUN echo "dash dash/sh boolean false" | debconf-set-selections && \
 RUN apt-get update && \
     apt-get install -y bc bison bsdmainutils build-essential curl \
         flex g++-multilib gcc-multilib git gnupg gperf lib32ncurses5-dev \
-        lib32readline-gplv2-dev lib32z1-dev libesd0-dev libncurses5-dev \
-        libsdl1.2-dev libwxgtk2.8-dev libxml2-utils lzop \
-        openjdk-7-jdk \
-        pngcrush schedtool xsltproc zip zlib1g-dev && \
+        lib32z1-dev libesd0-dev libncurses5-dev \
+        libsdl1.2-dev libwxgtk3.0-dev libxml2-utils lzop sudo \
+        openjdk-8-jdk \
+        pngcrush schedtool xsltproc zip zlib1g-dev graphviz && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN curl $REPO_DOWNLOAD_URL -o /usr/local/bin/repo
@@ -37,11 +37,10 @@ RUN echo "export REPO_URL=$REPO_URL_ENV" >> /root/.bashrc
 RUN echo '. /etc/profile' >> /root/.bashrc
 RUN echo 'export AOSP_ROOT=/usr/local/aosp' >> /root/.bashrc
 RUN echo 'export PATH=$PATH:${AOSP_ROOT}/out/host/linux-x86/bin' >> /root/.bashrc
-WORKDIR /
 
-# config git and ssh
-ADD gitconfig /root/.gitconfig
-ADD ssh_config /root/.ssh/config
+# All builds will be done by user aosp
+COPY gitconfig /root/.gitconfig
+COPY ssh_config /root/.ssh/config
 
 # The persistent data will be in these two directories, everything else is
 # considered to be ephemeral
