@@ -1,0 +1,11 @@
+version: "2"
+
+services:
+  aosp:
+    image: aosp:5.x
+    command:  ping 127.0.0.1
+    container_name: aosp-5.x
+    volumes:
+        - ~/aosp/ccache:/tmp/ccache
+        - /usr/local/aosp:/usr/local/aosp
+        - ~/.gitconfig:/root/.gitconfig
