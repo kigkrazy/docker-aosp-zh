@@ -1,0 +1,11 @@
+version: "2"
+
+services:
+  aosp:
+    image: aosp:7.x
+    command:  cd /usr/local/aosp && source build/envsetup.sh && ping 127.0.0.1
+    container_name: aosp-7.x
+    volumes:
+        - ~/aosp/ccache:/tmp/ccache
+        - /usr/local/aosp:/usr/local/aosp
+        - ~/.gitconfig:/root/.gitconfig
