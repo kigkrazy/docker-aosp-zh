@@ -2,9 +2,9 @@ version: "2"
 
 services:
   aosp:
-    image: aosp:5.x
+    image: aosp:6.x
     command:  cd /usr/local/aosp && source build/envsetup.sh && ping 127.0.0.1
-    container_name: aosp-5.x
+    container_name: aosp-6.x
     volumes:
         - ~/aosp/ccache:/tmp/ccache
         - /usr/local/aosp:/usr/local/aosp
