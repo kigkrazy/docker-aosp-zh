@@ -15,9 +15,14 @@ ENV REPO_URL_ENV 'https://mirrors.tuna.tsinghua.edu.cn/git/git-repo/'
 
 # /bin/sh points to Dash by default, reconfigure to use bash until Android
 # build becomes POSIX compliant
+
+
 RUN echo "dash dash/sh boolean false" | debconf-set-selections && \
     dpkg-reconfigure -p critical dash
 
+RUN apt-get update
+RUN apt-get install -y software-properties-common python-software-properties   
+RUN add-apt-repository ppa:openjdk-r/ppa
 # Keep the dependency list as short as reasonable
 RUN apt-get update && \
     apt-get install -y bc bison bsdmainutils build-essential curl \
