@@ -7,5 +7,5 @@ services:
     container_name: aosp-6.x
     volumes:
         - ~/aosp/ccache:/tmp/ccache
-        - /usr/local/aosp:/usr/local/aosp
+        - /usr/local/aosp-6.x:/usr/local/aosp
         - ~/.gitconfig:/root/.gitconfig
