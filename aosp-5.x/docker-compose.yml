@@ -4,7 +4,7 @@ services:
   aosp:
     image: aosp:5.x
     command: ping 127.0.0.1
-    container_name: aosp-5.x
+    container_name: cm-12.1
     volumes:
         - ~/aosp/ccache:/tmp/ccache
         - /usr/local/aosp-5.x:/usr/local/aosp
